@@ -6,6 +6,7 @@
     public abstract class AdventOfCodeBase
     {
         protected string InputFilename => $"Inputs\\{this.GetType().Name}.txt";
+        protected string InputExampleFilename => $"Inputs\\{this.GetType().Name}_example.txt";
 
         /// <summary>
         /// Returns the answer part one
