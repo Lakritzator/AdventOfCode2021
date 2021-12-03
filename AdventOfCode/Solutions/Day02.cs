@@ -6,7 +6,7 @@ public class Day02 : AdventOfCodeBase
 
     public Day02()
     {
-        Assert.True(File.Exists(this.InputExampleFilename));
+        Assert.True(File.Exists(this.InputFilename));
         _submarineCommands = File.ReadAllLines(this.InputFilename).Where(l => !string.IsNullOrEmpty(l)).ToList();
     }
 
