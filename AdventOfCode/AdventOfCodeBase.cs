@@ -25,6 +25,6 @@ public abstract class AdventOfCodeBase
     /// Returns the answer part one
     /// </summary>
     /// <returns>string</returns>
-    public abstract string AnswerPartTwo();
+    public virtual string AnswerPartTwo() => "Answer 2: Not implemented yet.";
 
 }

@@ -27,7 +27,7 @@ public class Day03 : AdventOfCodeBase
             }
         }
 
-        // count bizs
+        // count bits
         foreach (var diagnosticValue in _diagnosticsReport)
         {
             nrOfDiagnosticsValues++;
@@ -65,13 +65,4 @@ public class Day03 : AdventOfCodeBase
 
         return $"Answer 1: {gamma * epsilon}";
     }
-
-    public override string AnswerPartTwo()
-    {
-        var position = 0;
-        var depth = 0;
-
-        return $"Answer 2: {position * depth}";
-    }
-
 }
