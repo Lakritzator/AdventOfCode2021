@@ -1,6 +1,7 @@
 # Advent of Code 2021
 
 This is the solution to the [Advent of Code 2021](https://adventofcode.com/2021/about) puzzles, written in C#
+
 Every time I finish a solution, I will push it to the repository.
 
 I use some of the newest C# language features (version 10), so it will most likely only work with Visual Studio 2022!
