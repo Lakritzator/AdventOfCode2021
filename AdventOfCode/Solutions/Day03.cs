@@ -65,4 +65,63 @@ public class Day03 : AdventOfCodeBase
 
         return $"Answer 1: {gamma * epsilon}";
     }
+
+    public override string AnswerPartTwo()
+    {
+        var currentDiagnosticValues = _diagnosticsReport;
+
+        int bitIndex = 0;
+        while (currentDiagnosticValues.Count > 1)
+        {
+            int bitCount0 = 0;
+            int bitCount1 = 0;
+            foreach (var diagnosticValue in currentDiagnosticValues)
+            {
+                var bit = diagnosticValue.AsSpan()[bitIndex];
+
+                switch (bit)
+                {
+                    case '0':
+                        bitCount0++;
+                        break;
+                    case '1':
+                        bitCount1++;
+                        break;
+                }
+            }
+            var selectedBit = bitCount0 > bitCount1 ? '0' : '1';
+            currentDiagnosticValues = currentDiagnosticValues.Where(diagnosticValue => diagnosticValue[bitIndex] == selectedBit).ToList();
+
+            bitIndex++;
+        }
+        var oxygenGeneratorRating = Convert.ToInt32(currentDiagnosticValues.FirstOrDefault(), 2);
+
+        currentDiagnosticValues = _diagnosticsReport;
+        bitIndex = 0;
+        while (currentDiagnosticValues.Count > 1)
+        {
+            int bitCount0 = 0;
+            int bitCount1 = 0;
+            foreach (var diagnosticValue in currentDiagnosticValues)
+            {
+                var bit = diagnosticValue.AsSpan()[bitIndex];
+
+                switch (bit)
+                {
+                    case '0':
+                        bitCount0++;
+                        break;
+                    case '1':
+                        bitCount1++;
+                        break;
+                }
+            }
+            var selectedBit = bitCount0 > bitCount1 ? '1' : '0';
+            currentDiagnosticValues = currentDiagnosticValues.Where(diagnosticValue => diagnosticValue[bitIndex] == selectedBit).ToList();
+
+            bitIndex++;
+        }
+        var cO2ScrubberRating = Convert.ToInt32(currentDiagnosticValues.FirstOrDefault(), 2);
+        return $"Answer 2: {oxygenGeneratorRating * cO2ScrubberRating}";
+    }
 }
