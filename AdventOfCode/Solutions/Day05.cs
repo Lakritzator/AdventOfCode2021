@@ -10,6 +10,35 @@ public class Day05 : AdventOfCodeBase
     private int[,] _diagram;
     private int _width, _height;
 
+
+    public override string AnswerPartOne()
+    {
+        Initialize(this.InputFilename);
+        foreach (var line in _lines)
+        {
+            if (line.P1.X == line.P2.X || line.P1.Y == line.P2.Y)
+            {
+                DrawLine(line);
+            }
+        }
+
+        int answer = CountOverlaps(2);
+
+        return $"Answer 1: {answer}";
+    }
+
+    public override string AnswerPartTwo()
+    {
+        Initialize(this.InputFilename);
+        foreach (var line in _lines)
+        {
+            DrawLine(line);
+        }
+        int answer = CountOverlaps(2);
+
+        return $"Answer 2: {answer}";
+    }
+
     private void Initialize(string path)
     {
         Assert.True(File.Exists(path));
@@ -41,6 +70,11 @@ public class Day05 : AdventOfCodeBase
         _diagram = new int[_width, _height];
     }
 
+    /// <summary>
+    /// A simple Bresenham line routine, I once wrote this for the C64, Amiga and PC in Assembly...
+    /// Now I just copied it...
+    /// </summary>
+    /// <param name="line"></param>
     private void DrawLine(Line line)
     {
         int x = line.P1.X;
@@ -114,33 +148,5 @@ public class Day05 : AdventOfCodeBase
         }
 
         return count;
-    }
-
-    public override string AnswerPartOne()
-    {
-        Initialize(this.InputFilename);
-        foreach (var line in _lines)
-        {
-            if (line.P1.X == line.P2.X || line.P1.Y == line.P2.Y)
-            {
-                DrawLine(line);
-            }
-        }
-
-        int answer = CountOverlaps(2);
-
-        return $"Answer 1: {answer}";
-    }
-
-    public override string AnswerPartTwo()
-    {
-        Initialize(this.InputFilename);
-        foreach (var line in _lines)
-        {
-            DrawLine(line);
-        }
-        int answer = CountOverlaps(2);
-
-        return $"Answer 2: {answer}";
     }
 }
