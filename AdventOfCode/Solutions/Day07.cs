@@ -2,6 +2,7 @@
 
 public class Day07 : AdventOfCodeBase
 {
+    private int[] _input;
     public Day07()
     {
         Initialize(this.InputFilename);
@@ -10,13 +11,50 @@ public class Day07 : AdventOfCodeBase
     private void Initialize(string path)
     {
         Assert.True(File.Exists(path));
-        var input = File.ReadAllLines(path).First().Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse);
+        _input = File.ReadAllLines(path).First().Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse).OrderBy(pos => pos).ToArray();
     }
 
     public override string AnswerPartOne()
     {
-        long answer = 0;
+        var maxPos = _input.Max();
+        var optimalPos = int.MaxValue;
+        for (int horizontalPos = 0; horizontalPos <= maxPos; horizontalPos++)
+        {
+            var possibleOptimalPos = _input.Select(h => CalculateFuelPartOne(h, horizontalPos)).Sum();
+            if (optimalPos > possibleOptimalPos)
+            {
+                optimalPos = possibleOptimalPos;
+            }
+        }
+        return $"Answer 1: {optimalPos}";
+    }
 
-        return $"Answer 1: {answer}";
+    public override string AnswerPartTwo()
+    {
+        var maxPos = _input.Max();
+        var optimalPos = int.MaxValue;
+        for (int horizontalPos = 0; horizontalPos <= maxPos; horizontalPos++)
+        {
+            var possibleOptimalPos = _input.Select(h => CalculateFuelPartTwo(h, horizontalPos)).Sum();
+            if (optimalPos > possibleOptimalPos)
+            {
+                optimalPos = possibleOptimalPos;
+            }
+        }
+        return $"Answer 1: {optimalPos}";
+    }
+
+    private int CalculateFuelPartOne(int crabPosition, int targetPosition)
+    {
+        var distance = Math.Abs(targetPosition - crabPosition);
+
+        return distance;
+    }
+
+    private int CalculateFuelPartTwo(int crabPosition, int targetPosition)
+    {
+        var distance = Math.Abs(targetPosition - crabPosition);
+
+        return distance * (distance + 1) / 2;
     }
 }
