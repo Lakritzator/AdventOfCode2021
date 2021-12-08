@@ -4,6 +4,8 @@ global using System.Linq;
 global using Xunit;
 global using System;
 global using System.Collections.Generic;
+global using System.Diagnostics.CodeAnalysis;
+global using System.Text;
 
 namespace AdventOfCode;
 
@@ -14,6 +16,7 @@ public abstract class AdventOfCodeBase
 {
     protected string InputFilename => $"Inputs\\{this.GetType().Name}.txt";
     protected string InputExampleFilename => $"Inputs\\{this.GetType().Name}_example.txt";
+    protected string InputExampleMiniFilename => $"Inputs\\{this.GetType().Name}_example_mini.txt";
 
     /// <summary>
     /// Returns the answer part one

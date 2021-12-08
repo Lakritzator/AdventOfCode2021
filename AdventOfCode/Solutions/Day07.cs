@@ -44,14 +44,14 @@ public class Day07 : AdventOfCodeBase
         return $"Answer 1: {optimalPos}";
     }
 
-    private int CalculateFuelPartOne(int crabPosition, int targetPosition)
+    private static int CalculateFuelPartOne(int crabPosition, int targetPosition)
     {
         var distance = Math.Abs(targetPosition - crabPosition);
 
         return distance;
     }
 
-    private int CalculateFuelPartTwo(int crabPosition, int targetPosition)
+    private static int CalculateFuelPartTwo(int crabPosition, int targetPosition)
     {
         var distance = Math.Abs(targetPosition - crabPosition);
 
