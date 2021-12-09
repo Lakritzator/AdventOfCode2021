@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/8
+/// </summary>
 public class Day08 : AdventOfCodeBase
 {
     private List<(string [] left, string[] right)> _input;

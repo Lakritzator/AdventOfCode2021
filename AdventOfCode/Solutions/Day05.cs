@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/5
+/// </summary>
 public class Day05 : AdventOfCodeBase
 {
     private IReadOnlyList<Line> _lines;

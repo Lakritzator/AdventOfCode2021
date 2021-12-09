@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/4
+/// </summary>
 public class Day04 : AdventOfCodeBase
 {
     private readonly List<int> _drawnNumbers;
@@ -85,8 +88,9 @@ public class Board
             var processedRows = rows[i].SplitClean(' ');
             if (Numbers == null)
             {
-                Numbers = new int[rows.Count, processedRows.Length];
-                WasDrawn = new bool[rows.Count, processedRows.Length];
+                
+                Numbers = new Map2D<int>(rows.Count, processedRows.Length);
+                WasDrawn = new Map2D<bool>(rows.Count, processedRows.Length);
             }
             for (int j = 0; j < processedRows.Length; j++)
             {
@@ -121,8 +125,8 @@ public class Board
     }
 
     private int LastDrawnNumber { get; set; }
-    private int[,] Numbers { get; }
-    private bool[,] WasDrawn { get; }
+    private Map2D<int> Numbers { get; }
+    private Map2D<bool> WasDrawn { get; }
 
     public void DrawNumber(int number)
     {

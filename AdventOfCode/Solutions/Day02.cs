@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/2
+/// </summary>
 public class Day02 : AdventOfCodeBase
 {
     private readonly List<string> _submarineCommands;

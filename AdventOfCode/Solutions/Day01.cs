@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/1
+/// </summary>
 public class Day01 : AdventOfCodeBase
 {
     private readonly Memory<int> _sonarDepths;

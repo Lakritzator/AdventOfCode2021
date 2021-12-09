@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/6
+/// </summary>
 public class Day06 : AdventOfCodeBase
 {
     private readonly long[] _initialValues = new long[9];

@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/9
+/// </summary>
 public class Day09 : AdventOfCodeBase
 {
     private Map2D<int> _depthMap2D;
@@ -45,8 +48,6 @@ public class Day09 : AdventOfCodeBase
         var answer = 1;
         var basinSizes = new List<int>();
         var doneMap = new Map2D<bool>(_depthMap2D.Width, _depthMap2D.Height);
-
-        var areas = new List<List<Point>>();
 
         // Use the deepest points as the starting point for the basin calculations
         foreach (var deepestPoint in DeepestPoints(_depthMap2D))

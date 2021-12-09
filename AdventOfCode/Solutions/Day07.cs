@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode.Solutions;
 
+/// <summary>
+/// Solution to https://adventofcode.com/2021/day/7
+/// </summary>
 public class Day07 : AdventOfCodeBase
 {
     private int[] _input;
