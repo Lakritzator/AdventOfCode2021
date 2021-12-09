@@ -12,7 +12,7 @@ public class Day06 : AdventOfCodeBase
     private void Initialize(string path)
     {
         Assert.True(File.Exists(path));
-        var input = File.ReadAllLines(path).First().Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse);
+        var input = File.ReadAllLines(path).First().SplitClean(',').Select(int.Parse);
 
         foreach (var i in input)
         {

@@ -29,11 +29,11 @@ public class Day08 : AdventOfCodeBase
 
         _input = File.ReadAllLines(path)
             // Separate left & right part
-            .Select(l => l.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .Select(l => l.SplitClean('|'))
             // Pick right part
             .Select(p => (
-                p[0].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(Order).ToArray(),
-                p[1].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(Order).ToArray()))
+                p[0].SplitClean(' ').Select(signal => signal.Order()).ToArray(),
+                p[1].SplitClean(' ').Select(signal => signal.Order()).ToArray()))
             .ToList();
     }
 
@@ -144,7 +144,7 @@ public class Day08 : AdventOfCodeBase
                 // If there are two similarities between 1 and our signal it's 3
                 if (knownSignals[1] != null)
                 {
-                    if (Union(knownSignals[1], signalInformation).Length == 2)
+                    if (knownSignals[1].Union(signalInformation).Length == 2)
                     {
                         knownSignals[3] = signalInformation;
                         return true;
@@ -153,7 +153,7 @@ public class Day08 : AdventOfCodeBase
                 // If there are three similarities between 7 and our signal it's 3
                 if (knownSignals[7] != null)
                 {
-                    if (Union(knownSignals[7], signalInformation).Length == 3)
+                    if (knownSignals[7].Union(signalInformation).Length == 3)
                     {
                         knownSignals[3] = signalInformation;
                         return true;
@@ -162,12 +162,12 @@ public class Day08 : AdventOfCodeBase
                 // If there are two similarities between 4 and our signal it's 2
                 if (knownSignals[4] != null)
                 {
-                    if (Union(knownSignals[4], signalInformation).Length == 2)
+                    if (knownSignals[4].Union(signalInformation).Length == 2)
                     {
                         knownSignals[2] = signalInformation;
                         return true;
                     }
-                    if (Union(knownSignals[4], signalInformation).Length == 3)
+                    if (knownSignals[4].Union(signalInformation).Length == 3)
                     {
                         knownSignals[5] = signalInformation;
                         return true;
@@ -179,7 +179,7 @@ public class Day08 : AdventOfCodeBase
                 // If there is one similarity between 1 and our signal it's 6
                 if (knownSignals[1] != null)
                 {
-                    if (Union(knownSignals[1], signalInformation).Length == 1)
+                    if (knownSignals[1].Union(signalInformation).Length == 1)
                     {
                         knownSignals[6] = signalInformation;
                         return true;
@@ -188,7 +188,7 @@ public class Day08 : AdventOfCodeBase
                 // If there are 2 similarities between 7 and our signal it's 6
                 if (knownSignals[7] != null)
                 {
-                    if (Union(knownSignals[7], signalInformation).Length == 2)
+                    if (knownSignals[7].Union(signalInformation).Length == 2)
                     {
                         knownSignals[6] = signalInformation;
                         return true;
@@ -197,7 +197,7 @@ public class Day08 : AdventOfCodeBase
                 // If there are two similarities between 4 and our signal it's 2
                 if (knownSignals[4] != null)
                 {
-                    if (Union(knownSignals[4], signalInformation).Length == 4)
+                    if (knownSignals[4].Union(signalInformation).Length == 4)
                     {
                         knownSignals[9] = signalInformation;
                         return true;
@@ -237,31 +237,31 @@ public class Day08 : AdventOfCodeBase
 
 
         // When you look what 7 has more than 1, you know what the encoded 'a' segment is
-        var aEncoded = Difference(knownSignals[7], knownSignals[1])[0];
+        var aEncoded = knownSignals[7].Difference(knownSignals[1])[0];
         decodeMap[(byte)aEncoded - (byte)'a'] = 'a';
 
         // When you look what 9 has more than 3, you know what the encoded 'b' segment is
-        var bEncoded = Difference(knownSignals[9], knownSignals[3])[0];
+        var bEncoded = knownSignals[9].Difference(knownSignals[3])[0];
         decodeMap[(byte)bEncoded - (byte)'a'] = 'b';
 
         // When you look what 8 has more than 6, you know what the encoded 'c' segment is
-        var cEncoded = Difference(knownSignals[8], knownSignals[6])[0];
+        var cEncoded = knownSignals[8].Difference(knownSignals[6])[0];
         decodeMap[(byte)cEncoded - (byte)'a'] = 'c';
 
         // When you look what 8 has more than 0, you know what the encoded 'd' segment is
-        var dEncoded = Difference(knownSignals[8], knownSignals[0])[0];
+        var dEncoded = knownSignals[8].Difference(knownSignals[0])[0];
         decodeMap[(byte)dEncoded - (byte)'a'] = 'd';
 
         // When you look what 8 has more than 9, you know what the encoded 'e' segment is
-        var eEncoded = Difference(knownSignals[8], knownSignals[9])[0];
+        var eEncoded = knownSignals[8].Difference(knownSignals[9])[0];
         decodeMap[(byte)eEncoded - (byte)'a'] = 'e';
 
         // When you look what 8 (minus segment b) has more than 3, you know what the encoded 'f' segment is
-        var fEncoded = Difference(Remove(knownSignals[8], bEncoded), knownSignals[2])[0];
+        var fEncoded = knownSignals[8].RemoveChars(bEncoded).Difference(knownSignals[2])[0];
         decodeMap[(byte)fEncoded - (byte)'a'] = 'f';
 
         // When you look what 9 (minus segment a) has more than 4, you know what the encoded 'g' segment is
-        var gEncoded = Difference(Remove(knownSignals[9], aEncoded), knownSignals[4])[0];
+        var gEncoded = knownSignals[9].RemoveChars(aEncoded).Difference(knownSignals[4])[0];
         decodeMap[(byte)gEncoded - (byte)'a'] = 'g';
 
         return decodeMap;
@@ -280,37 +280,6 @@ public class Day08 : AdventOfCodeBase
         {
             aCharArray[i] = decodeMap[(byte)aCharArray[i] - (byte)'a'];
         }
-        return Order(string.Join("", aCharArray));
+        return string.Join("", aCharArray).Order();
     }
-
-    /// <summary>
-    /// Return the intersection of both strings (abc & bcd = bc)
-    /// </summary>
-    /// <param name="a">string 1</param>
-    /// <param name="b">string 2</param>
-    /// <returns>string with union</returns>
-    private static string Union(string a, string b) => string.Join("", a.ToCharArray().Intersect(b.ToCharArray()));
-
-    /// <summary>
-    /// Return the difference of both strings (abc & bcd = a)
-    /// </summary>
-    /// <param name="a">string 1</param>
-    /// <param name="b">string 2</param>
-    /// <returns>string with difference</returns>
-    private static string Difference(string a, string b) => string.Join("", a.ToCharArray().Except(b.ToCharArray()));
-
-    /// <summary>
-    /// Remove char(s) from the supplied string (abc & a = abc)
-    /// </summary>
-    /// <param name="a">string 1</param>
-    /// <param name="b">multiple chars</param>
-    /// <returns>string with chars removed</returns>
-    private static string Remove(string a, params char [] b) => string.Join("", a.Where(c => !b.Contains(c)));
-
-    /// <summary>
-    /// Sort the supplied string by characters
-    /// </summary>
-    /// <param name="a"></param>
-    /// <returns></returns>
-    private static string Order(string a) => string.Join("", a.ToCharArray().OrderBy(c => c));
 }

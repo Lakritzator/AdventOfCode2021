@@ -17,7 +17,7 @@ public class Day02 : AdventOfCodeBase
 
         foreach (var submarineCommand in _submarineCommands)
         {
-            var commandInformation = submarineCommand.Split(" ");
+            var commandInformation = submarineCommand.SplitClean(" ");
             var command = commandInformation[0];
             var x = int.Parse(commandInformation[1]);
             switch (command)

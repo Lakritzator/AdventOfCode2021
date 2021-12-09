@@ -12,7 +12,7 @@ public class Day04 : AdventOfCodeBase
 
         var lines = File.ReadAllLines(this.InputFilename).ToList();
 
-        _drawnNumbers = lines[0].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+        _drawnNumbers = lines[0].SplitClean(',').Select(int.Parse).ToList();
 
         var boardLines = new List<string>();
         for (var index = 2; index < lines.Count; index++)
@@ -82,7 +82,7 @@ public class Board
     {
         for (int i = 0; i < rows.Count; i++)
         {
-            var processedRows = rows[i].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var processedRows = rows[i].SplitClean(' ');
             if (Numbers == null)
             {
                 Numbers = new int[rows.Count, processedRows.Length];

@@ -11,7 +11,7 @@ public class Day07 : AdventOfCodeBase
     private void Initialize(string path)
     {
         Assert.True(File.Exists(path));
-        _input = File.ReadAllLines(path).First().Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse).OrderBy(pos => pos).ToArray();
+        _input = File.ReadAllLines(path).First().SplitClean(',').Select(int.Parse).OrderBy(pos => pos).ToArray();
     }
 
     public override string AnswerPartOne()
