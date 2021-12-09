@@ -23,7 +23,7 @@ public abstract class AdventOfCodeBase
     /// Returns the answer part one
     /// </summary>
     /// <returns>string</returns>
-    public abstract string AnswerPartOne();
+    public virtual string AnswerPartOne() => "Answer 1: Not implemented yet.";
 
     /// <summary>
     /// Returns the answer part one
