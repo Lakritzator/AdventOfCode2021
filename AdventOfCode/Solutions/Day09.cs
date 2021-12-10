@@ -56,13 +56,13 @@ public class Day09 : AdventOfCodeBase
             {
                 continue;
             }
-            var queueIn = new Queue<Point>();
-            queueIn.Enqueue(deepestPoint.point);
-            var queueOut = new Queue<Point>();
+            var stackIn = new Stack<Point>();
+            stackIn.Push(deepestPoint.point);
+            var stackOut = new Stack<Point>();
             var basinSize = 0;
-            while (queueIn.Count > 0)
+            while (stackIn.Count > 0)
             {
-                while (queueIn.TryDequeue(out var currentPoint))
+                while (stackIn.TryPop(out var currentPoint))
                 {
                     // Did we already map this point?
                     if (doneMap[currentPoint])
@@ -74,25 +74,25 @@ public class Day09 : AdventOfCodeBase
                     basinSize++;
                     var under = currentPoint.Under();
                     if (_depthMap2D.IsInMap(under) && !doneMap[under] && _depthMap2D[under] < 9) {
-                        queueOut.Enqueue(under);
+                        stackOut.Push(under);
                     }
                     var above = currentPoint.Above();
                     if (_depthMap2D.IsInMap(above) && !doneMap[above] && _depthMap2D[above] < 9)
                     {
-                        queueOut.Enqueue(above);
+                        stackOut.Push(above);
                     }
                     var left = currentPoint.Left();
                     if (_depthMap2D.IsInMap(left) && !doneMap[left] && _depthMap2D[left] < 9)
                     {
-                        queueOut.Enqueue(left);
+                        stackOut.Push(left);
                     }
                     var right = currentPoint.Right();
                     if (_depthMap2D.IsInMap(right) && !doneMap[right] && _depthMap2D[right] < 9)
                     {
-                        queueOut.Enqueue(right);
+                        stackOut.Push(right);
                     }
                 }
-                queueIn = queueOut;
+                stackIn = stackOut;
             }
             basinSizes.Add(basinSize);
         }
