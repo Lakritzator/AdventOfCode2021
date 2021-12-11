@@ -5,7 +5,7 @@
 /// </summary>
 public class Day09 : AdventOfCodeBase
 {
-    private Map2D<int> _depthMap2D;
+    private Grid<int> _depthGrid;
 
     public Day09()
     {
@@ -19,14 +19,14 @@ public class Day09 : AdventOfCodeBase
 
         var lines = File.ReadAllLines(path).Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
 
-        _depthMap2D = new Map2D<int>(lines[0].Length, lines.Length);
+        _depthGrid = new Grid<int>(lines[0].Length, lines.Length);
 
-        for (int y = 0; y < _depthMap2D.Height; y++)
+        for (int y = 0; y < _depthGrid.Height; y++)
         {
             var depths = lines[y].AsSpan();
-            for (int x = 0; x < _depthMap2D.Width; x++)
+            for (int x = 0; x < _depthGrid.Width; x++)
             {
-                _depthMap2D[x, y] = depths[x]-'0';
+                _depthGrid[x, y] = depths[x]-'0';
             }
         }
     }
@@ -35,7 +35,7 @@ public class Day09 : AdventOfCodeBase
     {
         var answer = 0;
 
-        foreach (var deepestPoint in DeepestPoints(_depthMap2D))
+        foreach (var deepestPoint in DeepestPoints(_depthGrid))
         {
             var riskLevel = deepestPoint.value + 1;
             answer += riskLevel;
@@ -47,10 +47,10 @@ public class Day09 : AdventOfCodeBase
     {
         var answer = 1;
         var basinSizes = new List<int>();
-        var doneMap = new Map2D<bool>(_depthMap2D.Width, _depthMap2D.Height);
+        var doneMap = new Grid<bool>(_depthGrid.Width, _depthGrid.Height);
 
         // Use the deepest points as the starting point for the basin calculations
-        foreach (var deepestPoint in DeepestPoints(_depthMap2D))
+        foreach (var deepestPoint in DeepestPoints(_depthGrid))
         {
             if (doneMap[deepestPoint.point])
             {
@@ -72,24 +72,12 @@ public class Day09 : AdventOfCodeBase
 
                     doneMap[currentPoint] = true;
                     basinSize++;
-                    var under = currentPoint.Under();
-                    if (_depthMap2D.IsInMap(under) && !doneMap[under] && _depthMap2D[under] < 9) {
-                        stackOut.Push(under);
-                    }
-                    var above = currentPoint.Above();
-                    if (_depthMap2D.IsInMap(above) && !doneMap[above] && _depthMap2D[above] < 9)
+                    foreach (var pointAround in currentPoint.PointsAround())
                     {
-                        stackOut.Push(above);
-                    }
-                    var left = currentPoint.Left();
-                    if (_depthMap2D.IsInMap(left) && !doneMap[left] && _depthMap2D[left] < 9)
-                    {
-                        stackOut.Push(left);
-                    }
-                    var right = currentPoint.Right();
-                    if (_depthMap2D.IsInMap(right) && !doneMap[right] && _depthMap2D[right] < 9)
-                    {
-                        stackOut.Push(right);
+                        if (_depthGrid.IsInGrid(pointAround) && !doneMap[pointAround] && _depthGrid[pointAround] < 9)
+                        {
+                            stackOut.Push(pointAround);
+                        }
                     }
                 }
                 stackIn = stackOut;
@@ -105,41 +93,30 @@ public class Day09 : AdventOfCodeBase
         return $"Answer 2: {answer}";
     }
 
-    private IEnumerable<(Point point, int value)> DeepestPoints(Map2D<int> depthMap)
+    private IEnumerable<(Point point, int value)> DeepestPoints(Grid<int> depthMap)
     {
-        for (int x = 0; x < depthMap.Width; x++)
+        foreach (var point in depthMap)
         {
-            for (int y = 0; y < depthMap.Height; y++)
+            if (IsDeepestPoint(depthMap, point))
             {
-                if (IsDeepestPoint(depthMap, x, y))
-                {
-                    yield return (new Point(x,y), depthMap[x, y]);
-                }
+                yield return (point, depthMap[point]);
             }
         }
     }
 
-    private bool IsDeepestPoint(Map2D<int> depthMap, int x, int y)
+    private bool IsDeepestPoint(Grid<int> depthMap, Point point)
     {
-        if (!depthMap.IsInMap(x, y))
+        if (!depthMap.IsInGrid(point))
         {
             return false;
         }
-        var depth = depthMap[x, y];
-        if (depthMap.IsInMap(x - 1, y) && depthMap[x - 1, y] <= depth) {
-            return false;
-        }
-        if (depthMap.IsInMap(x + 1, y) && depthMap[x + 1, y] <= depth)
+        var depth = depthMap[point];
+        foreach (var pointAround in point.PointsAround())
         {
-            return false;
-        }
-        if (depthMap.IsInMap(x, y - 1) && depthMap[x, y - 1] <= depth)
-        {
-            return false;
-        }
-        if (depthMap.IsInMap(x, y + 1) && depthMap[x, y + 1] <= depth)
-        {
-            return false;
+            if (depthMap.IsInGrid(pointAround) && depthMap[pointAround] <= depth)
+            {
+                return false;
+            }
         }
         return true;
     }

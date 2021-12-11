@@ -89,8 +89,8 @@ public class Board
             if (Numbers == null)
             {
                 
-                Numbers = new Map2D<int>(rows.Count, processedRows.Length);
-                WasDrawn = new Map2D<bool>(rows.Count, processedRows.Length);
+                Numbers = new Grid<int>(rows.Count, processedRows.Length);
+                WasDrawn = new Grid<bool>(rows.Count, processedRows.Length);
             }
             for (int j = 0; j < processedRows.Length; j++)
             {
@@ -125,8 +125,8 @@ public class Board
     }
 
     private int LastDrawnNumber { get; set; }
-    private Map2D<int> Numbers { get; }
-    private Map2D<bool> WasDrawn { get; }
+    private Grid<int> Numbers { get; }
+    private Grid<bool> WasDrawn { get; }
 
     public void DrawNumber(int number)
     {

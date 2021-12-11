@@ -6,7 +6,7 @@
 public class Day05 : AdventOfCodeBase
 {
     private IReadOnlyList<Line> _lines;
-    private Map2D<int> _diagram;
+    private Grid<int> _diagram;
 
     public override string AnswerPartOne()
     {
@@ -61,7 +61,7 @@ public class Day05 : AdventOfCodeBase
             lines.Add(new Line(p1, p2));
         }
 
-        _diagram = new Map2D<int>(maxX + 1, maxY + 1);
+        _diagram = new Grid<int>(maxX + 1, maxY + 1);
         _lines = lines;
     }
 

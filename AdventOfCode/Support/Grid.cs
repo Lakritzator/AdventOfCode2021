@@ -1,28 +1,43 @@
-﻿namespace AdventOfCode.Support;
+﻿using System.Collections;
 
-public class Map2D<T>
+namespace AdventOfCode.Support;
+
+public class Grid<T> : IEnumerable<Point>
 {
     private readonly T[,] _map;
     private readonly int _height, _width;
 
-    public Map2D(int width, int height)
+    public Grid(int width, int height)
     {
         _width = width;
         _height = height;
         _map = new T[width, height];
     }
 
-    public Map2D<T> CreateEmptyLike()
+    public Grid<TOther> CreateEmptyLike<TOther>()
     {
-        return new Map2D<T>(_width, _height);
+        return new Grid<TOther>(_width, _height);
+    }
+
+    public Grid<T> Clone()
+    {
+        var clone = new Grid<T>(_width, _height);
+        for (int x = 0; x < _width; x++)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                clone[x,y] = _map[x, y];
+            }
+        }
+        return clone;
     }
 
     public int Height => _height;
     public int Width => _width;
 
-    public bool IsInMap(Point p) => IsInMap(p.X, p.Y);
+    public bool IsInGrid(Point p) => IsInGrid(p.X, p.Y);
 
-    public bool IsInMap(int x, int y)
+    public bool IsInGrid(int x, int y)
     {
         if (x >= _width || x < 0)
         {
@@ -47,7 +62,7 @@ public class Map2D<T>
     {
         get
         {
-            if (!IsInMap(x, y))
+            if (!IsInGrid(x, y))
             {
                 throw new IndexOutOfRangeException($"{x},{y} doesn't fit in {_width},{_height}");
             }
@@ -55,7 +70,7 @@ public class Map2D<T>
         }
         set
         {
-            if (!IsInMap(x, y))
+            if (!IsInGrid(x, y))
             {
                 throw new IndexOutOfRangeException($"{x},{y} doesn't fit in {_width},{_height}");
             }
@@ -127,4 +142,34 @@ public class Map2D<T>
         }
     }
 
+    public IEnumerator<Point> GetEnumerator()
+    {
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                yield return (new Point(x, y));
+            }
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public override string ToString()
+    {
+        StringBuilder result = new StringBuilder();
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                result.Append(_map[x, y]);
+            }
+
+            result.AppendLine();
+        }
+        return result.ToString();
+    }
 }
