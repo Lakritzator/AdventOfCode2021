@@ -35,21 +35,16 @@ public class Grid<T> : IEnumerable<Point>
     public int Height => _height;
     public int Width => _width;
 
-    public bool IsInGrid(Point p) => IsInGrid(p.X, p.Y);
+    public bool IsValid(Point p) => IsValid(p.X, p.Y);
 
-    public bool IsInGrid(int x, int y)
+    public bool IsValid(int x, int y)
     {
         if (x >= _width || x < 0)
         {
             return false;
         }
 
-        if (y >= _height || y < 0)
-        {
-            return false;
-        }
-
-        return true;
+        return y < _height && y >= 0;
     }
 
     public T this[Point p]
@@ -62,7 +57,7 @@ public class Grid<T> : IEnumerable<Point>
     {
         get
         {
-            if (!IsInGrid(x, y))
+            if (!IsValid(x, y))
             {
                 throw new IndexOutOfRangeException($"{x},{y} doesn't fit in {_width},{_height}");
             }
@@ -70,7 +65,7 @@ public class Grid<T> : IEnumerable<Point>
         }
         set
         {
-            if (!IsInGrid(x, y))
+            if (!IsValid(x, y))
             {
                 throw new IndexOutOfRangeException($"{x},{y} doesn't fit in {_width},{_height}");
             }

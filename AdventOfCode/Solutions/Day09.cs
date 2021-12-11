@@ -74,7 +74,7 @@ public class Day09 : AdventOfCodeBase
                     basinSize++;
                     foreach (var pointAround in currentPoint.PointsAround())
                     {
-                        if (_depthGrid.IsInGrid(pointAround) && !doneMap[pointAround] && _depthGrid[pointAround] < 9)
+                        if (_depthGrid.IsValid(pointAround) && !doneMap[pointAround] && _depthGrid[pointAround] < 9)
                         {
                             stackOut.Push(pointAround);
                         }
@@ -106,14 +106,14 @@ public class Day09 : AdventOfCodeBase
 
     private bool IsDeepestPoint(Grid<int> depthMap, Point point)
     {
-        if (!depthMap.IsInGrid(point))
+        if (!depthMap.IsValid(point))
         {
             return false;
         }
         var depth = depthMap[point];
         foreach (var pointAround in point.PointsAround())
         {
-            if (depthMap.IsInGrid(pointAround) && depthMap[pointAround] <= depth)
+            if (depthMap.IsValid(pointAround) && depthMap[pointAround] <= depth)
             {
                 return false;
             }

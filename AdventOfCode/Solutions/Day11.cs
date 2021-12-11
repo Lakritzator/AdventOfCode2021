@@ -129,7 +129,7 @@ public class Day11 : AdventOfCodeBase
     /// <returns>true if the octo flashed</returns>
     private bool ProcessEnergyTransfer(Point octoToTransferEnergyTo, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
     {
-        return octoGrid.IsInGrid(octoToTransferEnergyTo) && IncreaseEnergy(octoToTransferEnergyTo, octoGrid, octosWhichFlashed);
+        return octoGrid.IsValid(octoToTransferEnergyTo) && IncreaseEnergy(octoToTransferEnergyTo, octoGrid, octosWhichFlashed);
     }
 
     /// <summary>
