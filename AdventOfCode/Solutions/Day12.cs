@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-
+﻿
 namespace AdventOfCode.Solutions;
 
 /// <summary>
@@ -156,12 +155,13 @@ public class Day12 : AdventOfCodeBase
         {
             cave = new Cave(caveName);
         }
-        if (!caves.TryGetValue(connectedTo, out var caveConnectedTo))
+        cave.ConnectedTo.Add(connectedTo);
+        caves[caveName] = cave;
+        if (!caves.ContainsKey(connectedTo))
         {
             caves[connectedTo] = new Cave(connectedTo);
         }
-        cave.ConnectedTo.Add(connectedTo);
-        caves[caveName] = cave;
+
     }
 }
 

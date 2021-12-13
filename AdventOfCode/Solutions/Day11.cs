@@ -66,7 +66,7 @@ public class Day11 : AdventOfCodeBase
     /// <param name="octoGrid">Grid with octo energy levels as input for the step</param>
     /// <param name="octosWhichFlashed">Grid with which octos flashed (used in part two)</param>
     /// <returns>int with the number of flashes in this step</returns>
-    private int Step(Grid<int> octoGrid, out Grid<bool> octosWhichFlashed)
+    private static int Step(Grid<int> octoGrid, out Grid<bool> octosWhichFlashed)
     {
         int flashes = 0;
         var octosWhichWillFlash = new Stack<Point>();
@@ -108,7 +108,7 @@ public class Day11 : AdventOfCodeBase
     /// <param name="octoGrid"></param>
     /// <param name="octosWhichFlashed"></param>
     /// <returns>IEnumerable with octos who also flash due to transfer</returns>
-    private IEnumerable<Point> FlashOcto(Point flashingOcto, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
+    private static IEnumerable<Point> FlashOcto(Point flashingOcto, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
     {
         foreach (var octoAround in flashingOcto.PointsAllAround())
         {
@@ -127,7 +127,7 @@ public class Day11 : AdventOfCodeBase
     /// <param name="octoGrid">Grid with the octo energy levels</param>
     /// <param name="octosWhichFlashed">Grid with the octos who already flashed</param>
     /// <returns>true if the octo flashed</returns>
-    private bool ProcessEnergyTransfer(Point octoToTransferEnergyTo, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
+    private static bool ProcessEnergyTransfer(Point octoToTransferEnergyTo, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
     {
         return octoGrid.IsValid(octoToTransferEnergyTo) && IncreaseEnergy(octoToTransferEnergyTo, octoGrid, octosWhichFlashed);
     }
@@ -139,7 +139,7 @@ public class Day11 : AdventOfCodeBase
     /// <param name="octoGrid">Grid with the octo energy levels</param>
     /// <param name="octosWhichFlashed">Grid with the octos who already flashed</param>
     /// <returns>true if the current octo flashed due to energy abundance</returns>
-    private bool IncreaseEnergy(Point currentOcto, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
+    private static bool IncreaseEnergy(Point currentOcto, Grid<int> octoGrid, Grid<bool> octosWhichFlashed)
     {
         if (octosWhichFlashed[currentOcto])
         {

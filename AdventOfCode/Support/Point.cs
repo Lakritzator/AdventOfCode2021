@@ -45,4 +45,15 @@ public record Point(int X, int Y)
 
     public Point LeftUnder() => Left().Under();
     public Point RightUnder() => Right().Under();
+
+    /// <summary>
+    /// Parse a point from a string with x,y
+    /// </summary>
+    /// <param name="pointInformation">string to parse</param>
+    /// <returns>Point</returns>
+    public static Point Parse(string pointInformation)
+    {
+        var pointSplit = pointInformation.SplitClean(',');
+        return new Point(int.Parse(pointSplit[0]), int.Parse(pointSplit[1]));
+    }
 }

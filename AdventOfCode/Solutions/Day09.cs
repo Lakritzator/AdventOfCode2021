@@ -93,9 +93,9 @@ public class Day09 : AdventOfCodeBase
         return $"Answer 2: {answer}";
     }
 
-    private IEnumerable<(Point point, int value)> DeepestPoints(Grid<int> depthMap) => depthMap.Where(p => IsDeepestPoint(depthMap, p)).Select(point => (point, depthMap[point]));
+    private static IEnumerable<(Point point, int value)> DeepestPoints(Grid<int> depthMap) => depthMap.Where(p => IsDeepestPoint(depthMap, p)).Select(point => (point, depthMap[point]));
     
-    private bool IsDeepestPoint(Grid<int> depthMap, Point point)
+    private static bool IsDeepestPoint(Grid<int> depthMap, Point point)
     {
         if (!depthMap.IsValid(point))
         {

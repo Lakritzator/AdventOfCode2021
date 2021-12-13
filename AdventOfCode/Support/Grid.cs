@@ -32,6 +32,16 @@ public class Grid<T> : IEnumerable<Point>
         return clone;
     }
 
+    public Grid<T> Clear(T value = default)
+    {
+        foreach (var point in this)
+        {
+            this[point] = value;
+        }
+
+        return this;
+    }
+
     public int Height => _height;
     public int Width => _width;
 
@@ -79,7 +89,7 @@ public class Grid<T> : IEnumerable<Point>
     /// </summary>
     /// <param name="line">Line</param>
     /// <param name="valueFunc">Func to create the new value</param>
-    public void DrawLine(Line line, Func<T,T> valueFunc)
+    public Grid<T> DrawLine(Line line, Func<T,T> valueFunc)
     {
         int x = line.P1.X;
         int y = line.P1.Y;
@@ -135,6 +145,8 @@ public class Grid<T> : IEnumerable<Point>
                 y += dy2;
             }
         }
+
+        return this;
     }
 
     public IEnumerator<Point> GetEnumerator()
@@ -155,7 +167,7 @@ public class Grid<T> : IEnumerable<Point>
 
     public override string ToString()
     {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new ();
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
