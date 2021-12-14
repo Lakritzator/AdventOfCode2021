@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Data;
 
 namespace AdventOfCode.Solutions;
 
@@ -37,22 +37,17 @@ public class Day13 : AdventOfCodeBase
     public override string AnswerPartOne()
     {
         Grid<char> beforeFold = _dots;
-        Grid<char> afterFold = null;
+        Grid<char> afterFold = beforeFold;
         foreach (var foldInstruction in _foldInstructions)
         {
             var splitData = foldInstruction.SplitClean('=');
             int foldPosition = int.Parse(splitData[1]);
-            switch (splitData[0])
+            afterFold = splitData[0] switch
             {
-                case "fold along x":
-                    afterFold = FoldLeft(beforeFold, foldPosition);
-                    break;
-                case "fold along y":
-                    afterFold = FoldUp(beforeFold, foldPosition);
-                    break;
-            }
-
-            beforeFold = afterFold;
+                "fold along x" => FoldLeft(beforeFold, foldPosition),
+                "fold along y" => FoldUp(beforeFold, foldPosition),
+                _ => throw new SyntaxErrorException(splitData[0])
+            };
             break;
         }
         return $"Answer 1: {afterFold.Count(p => afterFold[p] ==DOT)}";
