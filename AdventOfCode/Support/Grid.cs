@@ -167,6 +167,24 @@ public class Grid<T> : IEnumerable<Point>
 
     public override string ToString() => ToString(t => t.ToString());
 
+    /// <summary>
+    /// Draw this grid onto another
+    /// </summary>
+    /// <param name="destination">Grid with the same type</param>
+    /// <param name="location">Point</param>
+    public void DrawTo(Grid<T> destination, Point location)
+    {
+        foreach (var point in this)
+        {
+            var destinationPoint = new Point(location.X + point.X, location.Y + point.Y);
+            if (!destination.IsValid(destinationPoint))
+            {
+                continue;
+            }
+            destination[destinationPoint] = this[point];
+        }
+    }
+
     public string ToString(Func<T,string> valueConverter)
     {
         StringBuilder result = new();
