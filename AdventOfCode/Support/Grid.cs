@@ -165,14 +165,16 @@ public class Grid<T> : IEnumerable<Point>
         return GetEnumerator();
     }
 
-    public override string ToString()
+    public override string ToString() => ToString(t => t.ToString());
+
+    public string ToString(Func<T,string> valueConverter)
     {
-        StringBuilder result = new ();
+        StringBuilder result = new();
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
             {
-                result.Append(_map[x, y]);
+                result.Append(valueConverter(_map[x, y]));
             }
 
             result.AppendLine();
