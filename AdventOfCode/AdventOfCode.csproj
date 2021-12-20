@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="JM.LinqFaster" Version="1.1.2" />
+    <PackageReference Include="rubendal.BitStream" Version="1.2.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 
